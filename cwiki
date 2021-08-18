@@ -1,0 +1,31 @@
+#! /bin/bash
+if [[ -f ".selfwiki.txt" ]]
+then
+	mv .selfwiki.txt ~/.local/share/
+elif [[ -f ~/.local/share/.selfwiki.txt ]]
+then
+	clear
+else
+	echo "You might need to update your script ./cwiki update"
+fi
+
+cmndline="$1"
+if [[ $cmndline -eq 1 ]]
+then
+	keyword=$(echo "" | dmenu -p "enter keyword:")
+	meaning=$(echo "" | dmenu -p "enter meaning:")
+	echo -e "\e[31m$keyword   \e[33m$meaning " >> ~/.local/share/.selfwiki.txt
+elif [[ $cmndline -eq 2 ]]
+then
+	shuf -n 1 ~/.local/share/.selfwiki.txt
+elif [[ $cmndline == "update" ]]
+then
+	git pull
+	mv .selfwiki.txt ~/local/share/selfwiki.txt
+
+else
+	printf "Usage: \n ./cwiki 1 : to add new entry \n ./cwiki 2 : to display random wiki\n update : updates script & wiki"
+fi
+
+
+
